@@ -1,0 +1,31 @@
+export interface iCommander {
+  artist: string;
+  cmc: number;
+  colorIdentity: any;
+  colors: any;
+  flavor: string;
+  foreignNames: any;
+  id: string;
+  imageUrl: string;
+  layout: string;
+  legalities: any;
+  manaCost: string;
+  multiverseid: string;
+  name: string;
+  number: string;
+  originalText: string;
+  originalType: string;
+  power: string;
+  printings: any;
+  rarity: string;
+  rulings: string;
+  set: string;
+  setName: string;
+  subtypes: string;
+  supertypes: [string];
+  text: string;
+  toughness: string;
+  type: string;
+  types: [string];
+  variations: [string];
+}
