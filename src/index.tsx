@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "../src/styles/index.scss";
+import "../src/styles/Sass/pages/index.scss";
 import App from "./App";
 import { MtgProvider } from "./contexts/mtgcontext";
 import { RenderProvider } from "./contexts/rendercontext";
