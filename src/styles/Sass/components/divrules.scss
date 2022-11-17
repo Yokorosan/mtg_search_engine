@@ -1,0 +1,37 @@
+.mainDivRules {
+  height: 100vh;
+  max-height: 740px;
+  max-width: 50%;
+  overflow-y: auto;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: inset 0.2em 0.2em 10px 1px black;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 8px;
+    li {
+      background-color: red;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: inset 0.1em 0.1em 4px 1px black;
+      p {
+        font-weight: 700;
+        font-size: 24px;
+        margin-bottom: 3px;
+      }
+      span {
+        display: inline-block;
+        font-weight: 500;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  @media (max-width: 550px) {
+    flex-direction: column;
+    max-width: 350px;
+  }
+}
