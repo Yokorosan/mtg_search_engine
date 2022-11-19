@@ -1,72 +1,41 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "../src/styles/Sass/App.scss";
+import { UlAutoComplete } from "./components/autocomplete";
+import { Placeholder } from "./components/placeholder";
 import { CompSearch } from "./components/search";
-import { GiCardRandom } from "react-icons/gi";
 import { MtgContext } from "./contexts/mtgcontext";
 
 function App() {
-  const {
-    getCommander,
-    card,
-    rules,
-    newName,
-    autoComplete,
-    setAutoComplete,
-    setInputValue,
-    setIsActive,
-  } = useContext(MtgContext);
+  const { getCommander, card, rules, newName, autoComplete } =
+    useContext(MtgContext);
+  const [conditional, setConditional] = useState(false);
 
   return (
     <>
       <header>
         <h1>MTG Search Engine</h1>
         <div className="headerDiv">
-          <button onClick={() => getCommander()}>Random Commander</button>
+          <button
+            onClick={() => {
+              getCommander();
+              setConditional(true);
+            }}
+          >
+            Random Commander
+          </button>
           <CompSearch />
-          {autoComplete.length !== 0 ? (
-            <ul>
-              {autoComplete.map((element, index) => (
-                <li
-                  key={index}
-                  onClick={() => {
-                    setInputValue(element);
-                    setAutoComplete([]);
-                    setIsActive(true);
-                  }}
-                >
-                  <p>{element}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <></>
-          )}
+          {autoComplete.length !== 0 ? <UlAutoComplete /> : <></>}
         </div>
       </header>
       <main>
+        <h2>{card.name}</h2>
         <div className="mainDiv">
           {card.image_uris ? (
             <div className="mainDivPicture">
-              <h2>{card.name}</h2>
               <img src={card?.image_uris.normal} alt={card?.name} />
             </div>
           ) : (
-            <div className="placeholderDiv">
-              <GiCardRandom />
-              <div>
-                <p>
-                  Não Encontramos uma imagem, mas talvez você tenha mais sorte
-                  no{" "}
-                  <a
-                    href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?name=${card.name}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Gatherer
-                  </a>
-                </p>
-              </div>
-            </div>
+            <Placeholder conditional={conditional} text={"foto"} />
           )}
 
           {rules.length !== 0 ? (
@@ -85,21 +54,7 @@ function App() {
               </ul>
             </div>
           ) : (
-            <div className="placeholderDiv">
-              <GiCardRandom />
-              <div>
-                <p>
-                  Não Encontramos rulings, mas talvez você tenha mais sorte no{" "}
-                  <a
-                    href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?name=${card.name}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Gatherer
-                  </a>
-                </p>
-              </div>
-            </div>
+            <Placeholder conditional={conditional} text={"regras"} />
           )}
         </div>
         <div></div>
