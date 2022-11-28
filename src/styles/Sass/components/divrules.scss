@@ -1,22 +1,33 @@
 .mainDivRules {
+  background-color: $color-background-1;
+  position: relative;
+
+  width: 100vw;
   height: 100vh;
   max-height: 740px;
   max-width: 50%;
-  overflow-y: auto;
-  padding: 5px 10px;
+  padding: 5px 0px;
   border-radius: 8px;
-  box-shadow: inset 0.2em 0.2em 10px 1px black;
 
   ul {
+    margin: 0 auto;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100%;
+    max-width: 85%;
     display: flex;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
     flex-direction: column;
     gap: 10px;
     border-radius: 8px;
     li {
-      background-color: red;
+      background-color: $color-secondary-1-0;
       padding: 10px 15px;
       border-radius: 8px;
-      box-shadow: inset 0.1em 0.1em 4px 1px black;
+      box-shadow: inset 0em 0em 4px 1px black;
       p {
         font-weight: 700;
         font-size: 24px;
@@ -30,8 +41,37 @@
       }
     }
   }
+
   @media (max-width: 550px) {
     flex-direction: column;
-    max-width: 350px;
+    max-width: 370px;
+    max-height: 350px;
+    ul {
+      max-width: 100%;
+    }
   }
+}
+.mainDivRules::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}
+ul::-webkit-scrollbar {
+  width: 5px;
+}
+
+ul::-webkit-scrollbar-thumb {
+  background: $color-secondary-1-3;
+  border-radius: 10px;
+}
+.mainDivRules::before {
+  content: "";
+  background-color: none;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0em 0em 10px 5px $black;
+  pointer-events: none;
+  border-radius: 8px;
 }

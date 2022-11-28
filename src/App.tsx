@@ -1,72 +1,42 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "../src/styles/Sass/App.scss";
+import edhrec from "./assets/Edhrec Logo.png";
+import archideckt from "./assets/archidektlogo.svg";
+import { UlAutoComplete } from "./components/autocomplete";
+import { Placeholder } from "./components/placeholder";
 import { CompSearch } from "./components/search";
-import { GiCardRandom } from "react-icons/gi";
 import { MtgContext } from "./contexts/mtgcontext";
 
 function App() {
-  const {
-    getCommander,
-    card,
-    rules,
-    newName,
-    autoComplete,
-    setAutoComplete,
-    setInputValue,
-    setIsActive,
-  } = useContext(MtgContext);
-
+  const { getCommander, card, rules, newName, autoComplete } =
+    useContext(MtgContext);
+  const [conditional, setConditional] = useState(false);
   return (
     <>
       <header>
         <h1>MTG Search Engine</h1>
         <div className="headerDiv">
-          <button onClick={() => getCommander()}>Random Commander</button>
-          <CompSearch />
-          {autoComplete.length !== 0 ? (
-            <ul>
-              {autoComplete.map((element, index) => (
-                <li
-                  key={index}
-                  onClick={() => {
-                    setInputValue(element);
-                    setAutoComplete([]);
-                    setIsActive(true);
-                  }}
-                >
-                  <p>{element}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <></>
-          )}
+          <button
+            onClick={() => {
+              getCommander();
+              setConditional(true);
+            }}
+          >
+            Random Commander
+          </button>
+          <CompSearch setConditional={setConditional} />
+          {autoComplete.length !== 0 ? <UlAutoComplete /> : <></>}
         </div>
       </header>
       <main>
+        <h2>{card.name}</h2>
         <div className="mainDiv">
           {card.image_uris ? (
             <div className="mainDivPicture">
-              <h2>{card.name}</h2>
               <img src={card?.image_uris.normal} alt={card?.name} />
             </div>
           ) : (
-            <div className="placeholderDiv">
-              <GiCardRandom />
-              <div>
-                <p>
-                  Não Encontramos uma imagem, mas talvez você tenha mais sorte
-                  no{" "}
-                  <a
-                    href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?name=${card.name}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Gatherer
-                  </a>
-                </p>
-              </div>
-            </div>
+            <Placeholder conditional={conditional} text={"foto"} />
           )}
 
           {rules.length !== 0 ? (
@@ -85,21 +55,7 @@ function App() {
               </ul>
             </div>
           ) : (
-            <div className="placeholderDiv">
-              <GiCardRandom />
-              <div>
-                <p>
-                  Não Encontramos rulings, mas talvez você tenha mais sorte no{" "}
-                  <a
-                    href={`https://gatherer.wizards.com/Pages/Card/Details.aspx?name=${card.name}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Gatherer
-                  </a>
-                </p>
-              </div>
-            </div>
+            <Placeholder conditional={conditional} text={"regras"} />
           )}
         </div>
         <div></div>
@@ -108,27 +64,25 @@ function App() {
         <></>
       ) : (
         <footer>
-          <h1>Sites</h1>
           <section>
             <div>
-              <p>Deck Builder</p>
               <a
                 href="https://www.archidekt.com"
                 target="_blank"
                 rel="noreferrer"
               >
+                <img className="archiimg" src={archideckt} alt="" />
                 ArchiDekt
               </a>
             </div>
             <div>
-              <p>Reference</p>
               {card.type_line.includes("Legendary Creature") ? (
                 <a
                   href={`https://edhrec.com/commanders/${newName}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Edhrec
+                  <img className="edhimg" src={edhrec} alt="" />
                 </a>
               ) : (
                 <a
@@ -136,7 +90,7 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Edhrec
+                  <img className="edhimg" src={edhrec} alt="" />
                 </a>
               )}
             </div>

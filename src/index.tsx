@@ -3,7 +3,9 @@ import ReactDOM from "react-dom/client";
 import "../src/styles/Sass/pages/index.scss";
 import App from "./App";
 import { MtgProvider } from "./contexts/mtgcontext";
-import { RenderProvider } from "./contexts/rendercontext";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,9 +13,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <MtgProvider>
-      <RenderProvider>
-        <App />
-      </RenderProvider>
+      <ToastContainer />
+      <App />
     </MtgProvider>
   </React.StrictMode>
 );

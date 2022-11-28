@@ -1,12 +1,16 @@
+@import "../variables";
 .InputDiv {
   display: flex;
   position: relative;
+  margin-top: 10px;
   height: 60px;
 
   label {
     position: absolute;
-    top: 35px;
-    left: 5px;
+    color: $black;
+    font-weight: 700px;
+    top: 32px;
+    left: 10px;
     pointer-events: none;
     transform-origin: top left;
     transition: all 0.2s ease-out;
@@ -15,22 +19,35 @@
     align-self: flex-end;
     padding-left: 5px;
     width: 100vw;
-    max-width: 403px;
-    height: 30px;
+    max-width: 450px;
+    height: 35px;
     margin-right: 10px;
     border-radius: 6px;
+    box-shadow: 3px 3px 1px 1px $black;
   }
   button {
-    width: 20%;
+    background-color: $color-complement-3;
+    width: 25%;
     align-self: flex-end;
-    height: 36px;
+    max-width: 150px;
+    height: 41px;
     border-radius: 6px;
+    box-shadow: 3px 3px 1px 1px $black;
+    color: $white;
+    font-weight: 600;
+    &:active {
+      box-shadow: inset 3px 3px 1px 1px $black;
+    }
   }
 }
 .InputDiv:focus-within label {
-  transform: translate(0px, -25px) scale(0.75);
+  transform: translate(0px, -28px) scale(0.75);
+  color: $white;
+  font-size: 18px;
 }
 
 .InputDiv .active {
   transform: translate(0px, -25px) scale(0.75);
+  color: $white;
+  font-size: 18px;
 }
