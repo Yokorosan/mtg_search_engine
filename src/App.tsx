@@ -1,5 +1,7 @@
 import { useContext, useState } from "react";
 import "../src/styles/Sass/App.scss";
+import edhrec from "./assets/Edhrec Logo.png";
+import archideckt from "./assets/archidektlogo.svg";
 import { UlAutoComplete } from "./components/autocomplete";
 import { Placeholder } from "./components/placeholder";
 import { CompSearch } from "./components/search";
@@ -9,7 +11,6 @@ function App() {
   const { getCommander, card, rules, newName, autoComplete } =
     useContext(MtgContext);
   const [conditional, setConditional] = useState(false);
-
   return (
     <>
       <header>
@@ -23,7 +24,7 @@ function App() {
           >
             Random Commander
           </button>
-          <CompSearch />
+          <CompSearch setConditional={setConditional} />
           {autoComplete.length !== 0 ? <UlAutoComplete /> : <></>}
         </div>
       </header>
@@ -63,27 +64,25 @@ function App() {
         <></>
       ) : (
         <footer>
-          <h1>Sites</h1>
           <section>
             <div>
-              <p>Deck Builder</p>
               <a
                 href="https://www.archidekt.com"
                 target="_blank"
                 rel="noreferrer"
               >
+                <img className="archiimg" src={archideckt} alt="" />
                 ArchiDekt
               </a>
             </div>
             <div>
-              <p>Reference</p>
               {card.type_line.includes("Legendary Creature") ? (
                 <a
                   href={`https://edhrec.com/commanders/${newName}`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Edhrec
+                  <img className="edhimg" src={edhrec} alt="" />
                 </a>
               ) : (
                 <a
@@ -91,7 +90,7 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Edhrec
+                  <img className="edhimg" src={edhrec} alt="" />
                 </a>
               )}
             </div>

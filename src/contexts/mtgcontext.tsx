@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 import { instance } from "../services/api";
+import { toast } from "react-toastify";
 import { iCommander } from "./interface/mtginterface";
 import { iRules } from "../contexts/interface/mtginterface";
 interface iMtgProps {
@@ -43,15 +44,28 @@ export const MtgProvider = ({ children }: iMtgProps) => {
     );
   };
   const getCommander = async () => {
+    const id = toast.loading("Buscando Commander...");
     try {
       const resp = await instance.get(`cards/random?q=is%3Acommander`);
       getRulings(resp.data.rulings_uri.split("/")[4]);
       setCard(resp.data);
       fixName(resp.data.name);
+      toast.update(id, {
+        render: `Encontramos seu General`,
+        type: "success",
+        isLoading: false,
+        autoClose: 1000,
+      });
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error(err);
       }
+      toast.update(id, {
+        render: `Não encontramos seu Commander`,
+        type: "warning",
+        isLoading: false,
+        autoClose: 1000,
+      });
     }
   };
 
@@ -78,13 +92,26 @@ export const MtgProvider = ({ children }: iMtgProps) => {
   };
 
   const getSpecificCard = async (data: string) => {
+    const id = toast.loading("Procurando Carta...");
     try {
       const resp = await instance.get(`cards/named?fuzzy=${data}`);
       getRulings(resp.data.rulings_uri.split("/")[4]);
       setCard(resp.data);
       fixName(resp.data.name);
+      toast.update(id, {
+        render: `Encontramos sua carta`,
+        type: "success",
+        isLoading: false,
+        autoClose: 1000,
+      });
     } catch (err) {
       if (axios.isAxiosError(err)) {
+        toast.update(id, {
+          render: `Não achamos a sua carta`,
+          type: "warning",
+          isLoading: false,
+          autoClose: 1000,
+        });
         console.error(err);
       }
     }

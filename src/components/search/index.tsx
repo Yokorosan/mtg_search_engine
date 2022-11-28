@@ -1,8 +1,10 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { MtgContext } from "../../contexts/mtgcontext";
 import "../../styles/Sass/components/search.scss";
-
-export const CompSearch = () => {
+interface iCompSearch {
+  setConditional: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export const CompSearch = ({ setConditional }: iCompSearch) => {
   const {
     getCard,
     setIsActive,
@@ -12,7 +14,7 @@ export const CompSearch = () => {
     getSpecificCard,
     setAutoComplete,
   } = useContext(MtgContext);
-
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const HandleTextChange = (text: string) => {
     getCard(text);
     setInputValue(text);
@@ -30,6 +32,7 @@ export const CompSearch = () => {
         </label>
         <input
           value={inputValue}
+          ref={inputRef}
           onChange={(event) => {
             HandleTextChange(event.target.value);
             if (event.target.value === "") {
@@ -43,6 +46,8 @@ export const CompSearch = () => {
             setInputValue("");
             setAutoComplete([]);
             setIsActive(false);
+            setConditional(true);
+            inputRef.current?.blur();
           }}
         >
           Procurar
